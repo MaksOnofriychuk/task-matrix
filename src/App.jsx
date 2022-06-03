@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import Form from "./components/Form/Form";
 import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
-import "./App.scss";
 
 function App() {
   const [columns, setColumns] = useState(0);
   const [rows, setRows] = useState(0);
-  // const [cells, setCells] = useState(0);
   const [tableState, setTableState] = useState("");
 
   const getFormState = (obj) => {
     setTableState(obj);
     setColumns(Number(obj.columns));
     setRows(Number(obj.rows));
-    // setCells(Number(obj.cells));
   };
 
   const columnsArray = Array(columns)
@@ -38,9 +35,10 @@ function App() {
         <Header />
         <div className="matrix__content">
           <Form getFormState={(obj) => getFormState(obj)} />
-          {tableState !== "" ? (
+
+          {tableState && (
             <Table matrixArray={matrixArray} columnsArray={columnsArray} />
-          ) : null}
+          )}
         </div>
       </div>
     </div>
