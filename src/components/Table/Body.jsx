@@ -27,7 +27,7 @@ const Body = ({ matrixState, setmatrxState }) => {
   }, 0);
 
   const averageOverColumnSums =
-    sumColumnsSum === 0 || matrixState.length === 0
+    !sumColumnsSum || matrixState.length === 0
       ? 0
       : Math.floor(sumColumnsSum / matrixState.length);
 
