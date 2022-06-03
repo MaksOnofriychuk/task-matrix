@@ -1,0 +1,28 @@
+.matrix__header {
+  background-color: grey;
+  border-radius: 7px;
+  margin-bottom: 50px;
+}
+
+.header__wrap {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__name {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  padding: 20px;
+  span {
+    margin-right: 5px;
+  }
+}
+.header__surname {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  padding: 20px;
+}
