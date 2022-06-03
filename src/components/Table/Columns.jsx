@@ -14,14 +14,15 @@ export const RowAvarage = ({ arrOfObj }) => {
 
 export const ButtonDelete = ({
   matrixState,
-  setmatrxState,
+  setmatrixState,
   arrOfObj,
   index,
 }) => {
   const deleteRow = (row, index) => {
     const res = matrixState.filter((item, i) => i !== index);
-    setmatrxState(res);
+    setmatrixState(res);
   };
+
   return (
     <th>
       <button
@@ -34,19 +35,20 @@ export const ButtonDelete = ({
   );
 };
 
-export const Cell = ({ cellObj, setmatrxState, matrixState }) => {
+export const Cell = ({ cellObj, setmatrixState, matrixState }) => {
   const addAmountCell = (objectCell) => {
     const res = matrixState.map((item) =>
       item.map((el) =>
         el.id === objectCell.id ? { id: el.id, value: el.value + 1 } : el
       )
     );
-    setmatrxState(res);
+    setmatrixState(res);
   };
+
   return <td onClick={() => addAmountCell(cellObj)}>{cellObj.value}</td>;
 };
 
-const Columns = ({ matrixState, setmatrxState }) => {
+const Columns = ({ matrixState, setmatrixState }) => {
   return (
     <>
       {matrixState.map((arrOfObj, index) => {
@@ -59,18 +61,18 @@ const Columns = ({ matrixState, setmatrxState }) => {
                   key={cellObj.id * Math.random()}
                   cellObj={cellObj}
                   matrixState={matrixState}
-                  setmatrxState={setmatrxState}
+                  setmatrixState={setmatrixState}
                 />
               );
             })}
             <RowAvarage
               arrOfObj={arrOfObj}
               matrixState={matrixState}
-              setmatrxState={setmatrxState}
+              setmatrixState={setmatrixState}
             />
             <ButtonDelete
               matrixState={matrixState}
-              setmatrxState={setmatrxState}
+              setmatrixState={setmatrixState}
               arrOfObj={arrOfObj}
               index={index}
             />

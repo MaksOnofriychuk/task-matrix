@@ -4,10 +4,10 @@ import Title from "./Title";
 import "./table.scss";
 
 const Table = ({ matrixArray, columnsArray }) => {
-  const [matrixState, setmatrxState] = useState(matrixArray);
+  const [matrixState, setmatrixState] = useState(matrixArray);
 
   const addRow = () => {
-    setmatrxState((prev) => [
+    setmatrixState((prev) => [
       ...prev,
       columnsArray.map((item) => ({
         id: Date.now() * Math.random(),
@@ -26,7 +26,7 @@ const Table = ({ matrixArray, columnsArray }) => {
         <tbody>
           <Body
             matrixState={matrixState}
-            setmatrxState={setmatrxState}
+            setmatrixState={setmatrixState}
             columnsArray={columnsArray}
           />
         </tbody>

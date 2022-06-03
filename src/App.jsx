@@ -4,21 +4,21 @@ import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
 
 function App() {
-  const [columns, setColumns] = useState(0);
-  const [rows, setRows] = useState(0);
+  const [columnsState, setColumnsState] = useState(0);
+  const [rowsState, setRowsState] = useState(0);
   const [tableState, setTableState] = useState("");
 
   const getFormState = (obj) => {
     setTableState(obj);
-    setColumns(Number(obj.columns));
-    setRows(Number(obj.rows));
+    setColumnsState(Number(obj.columns));
+    setRowsState(Number(obj.rows));
   };
 
-  const columnsArray = Array(columns)
+  const columnsArray = Array(columnsState)
     .fill(0)
     .map((c, i) => i + 1);
 
-  const rowsArray = Array(rows)
+  const rowsArray = Array(rowsState)
     .fill(0)
     .map((c, i) => i + 1);
 
