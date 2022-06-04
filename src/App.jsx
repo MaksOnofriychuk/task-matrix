@@ -4,28 +4,30 @@ import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
 
 function App() {
-  const [columns, setColumns] = useState(0);
-  const [rows, setRows] = useState(0);
+  const [columnsState, setColumnsState] = useState(0);
+
+  const [rowsState, setRowsState] = useState(0);
+
   const [tableState, setTableState] = useState("");
 
-  const getFormState = (obj) => {
-    setTableState(obj);
-    setColumns(Number(obj.columns));
-    setRows(Number(obj.rows));
+  const getFormState = (formState) => {
+    setTableState(formState);
+    setColumnsState(Number(formState.columns));
+    setRowsState(Number(formState.rows));
   };
 
-  const columnsArray = Array(columns)
+  const columnsArray = Array(columnsState)
     .fill(0)
-    .map((c, i) => i + 1);
+    .map((_, i) => i + 1);
 
-  const rowsArray = Array(rows)
+  const rowsArray = Array(rowsState)
     .fill(0)
-    .map((c, i) => i + 1);
+    .map((_, i) => i + 1);
 
-  const matrixArray = rowsArray.map((el) => {
-    return columnsArray.map((item) => ({
-      id: Date.now() * Math.random(),
-      value: Math.floor(Math.random() * 10),
+  const matrixArray = rowsArray.map((_, i) => {
+    return columnsArray.map((_, j) => ({
+      id: `${i} + ${j}`,
+      value: Math.floor(Math.random() * 1000),
     }));
   });
 
