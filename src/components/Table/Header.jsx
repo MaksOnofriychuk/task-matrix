@@ -6,10 +6,10 @@ const Header = ({ columnsArray, matrixState }) => {
       <tr>
         <th scope="col">N</th>
         {matrixState.length ? (
-          columnsArray.map((column, index) => {
+          columnsArray.map((column) => {
             return (
               <th key={column} scope="col">
-                {index + 1}
+                {column}
               </th>
             );
           })

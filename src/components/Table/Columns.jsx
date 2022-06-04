@@ -15,13 +15,19 @@ export const Cell = ({ cell, setMatrixState, matrixState }) => {
 
 export const RowAvarage = ({ rows }) => {
   return (
-    <th>{rows ? rows.reduce((acc, curr) => acc + curr.value, 0) : null}</th>
+    <>
+      {rows && (
+        <th>
+          {rows.reduce((resultNumber, cell) => resultNumber + cell.value, 0)}
+        </th>
+      )}
+    </>
   );
 };
 
 export const ButtonDelete = ({ matrixState, setMatrixState, index }) => {
   const deletingRow = (index) => {
-    const newMatrixState = matrixState.filter((rows, i) => i !== index);
+    const newMatrixState = matrixState.filter((_, i) => i !== index);
     setMatrixState(newMatrixState);
   };
 

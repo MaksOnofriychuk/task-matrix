@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import Body from "./Body";
 import Header from "./Header";
-import { nanoid } from "nanoid";
 import "./table.scss";
 
-const Table = ({ matrixArray, columnsArray, cellIdSize }) => {
+const Table = ({ matrixArray, columnsArray }) => {
   const [matrixState, setMatrixState] = useState(matrixArray);
 
   const addedingRow = () => {
     setMatrixState((prevState) => [
       ...prevState,
-      columnsArray.map((column) => ({
-        id: nanoid(cellIdSize),
+      columnsArray.map((_, i) => ({
+        id: `${matrixState[0][0].id} + ${i}`,
         value: Math.floor(Math.random() * 1000),
       })),
     ]);

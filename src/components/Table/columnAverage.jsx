@@ -1,11 +1,11 @@
 import React from "react";
 
 const ColumnAverage = ({ matrixState }) => {
-  const sumByColumnsArray = matrixState.reduce((accArr, arr) => {
-    arr.forEach((obj, index) => {
-      accArr[index] = (accArr[index] || 0) + obj.value;
+  const sumByColumnsArray = matrixState.reduce((resultArr, arr) => {
+    arr.forEach((cell, index) => {
+      resultArr[index] = (resultArr[index] || 0) + cell.value;
     });
-    return accArr;
+    return resultArr;
   }, []);
 
   const columnAvarageArray = sumByColumnsArray.map((num) =>
