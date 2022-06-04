@@ -11,15 +11,11 @@ const Form = ({ getFormState }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      formState.columns >= 0 &&
       formState.columns !== "" &&
-      formState.rows >= 0 &&
       formState.rows !== "" &&
       formState.cells !== ""
     ) {
       getFormState(formState);
-    } else {
-      return;
     }
 
     setFormState({
@@ -60,6 +56,8 @@ const Form = ({ getFormState }) => {
               value={formState.rows}
               onChange={handleChange}
               name="rows"
+              type="number"
+              min="0"
               className="form__input"
             />
           </div>
@@ -69,6 +67,8 @@ const Form = ({ getFormState }) => {
               value={formState.cells}
               onChange={handleChange}
               name="cells"
+              type="number"
+              min="0"
               className="form__input"
             />
           </div>

@@ -1,79 +1,62 @@
 import React from "react";
 
-export const RowAvarage = ({ arrOfObj }) => {
+export const Cell = ({ cell, setMatrixState, matrixState }) => {
+  const addingCell = (cell) => {
+    const newMatrixState = matrixState.map((items) =>
+      items.map((item) =>
+        item.id === cell.id ? { id: item.id, value: item.value + 1 } : item
+      )
+    );
+    setMatrixState(newMatrixState);
+  };
+
+  return <td onClick={() => addingCell(cell)}>{cell.value}</td>;
+};
+
+export const RowAvarage = ({ rows }) => {
   return (
-    <th key={Math.random() + 100}>
-      {arrOfObj
-        ? arrOfObj.reduce((acc, curr) => {
-            return acc + curr.value;
-          }, 0)
-        : null}
-    </th>
+    <th>{rows ? rows.reduce((acc, curr) => acc + curr.value, 0) : null}</th>
   );
 };
 
-export const ButtonDelete = ({
-  matrixState,
-  setmatrixState,
-  arrOfObj,
-  index,
-}) => {
-  const deleteRow = (row, index) => {
-    const res = matrixState.filter((item, i) => i !== index);
-    setmatrixState(res);
+export const ButtonDelete = ({ matrixState, setMatrixState, index }) => {
+  const deletingRow = (index) => {
+    const newMatrixState = matrixState.filter((rows, i) => i !== index);
+    setMatrixState(newMatrixState);
   };
 
   return (
     <th>
-      <button
-        key={Math.random() * Math.random()}
-        onClick={() => deleteRow(arrOfObj, index)}
-      >
-        x
-      </button>
+      <button onClick={() => deletingRow(index)}>x</button>
     </th>
   );
 };
 
-export const Cell = ({ cellObj, setmatrixState, matrixState }) => {
-  const addAmountCell = (objectCell) => {
-    const res = matrixState.map((item) =>
-      item.map((el) =>
-        el.id === objectCell.id ? { id: el.id, value: el.value + 1 } : el
-      )
-    );
-    setmatrixState(res);
-  };
-
-  return <td onClick={() => addAmountCell(cellObj)}>{cellObj.value}</td>;
-};
-
-const Columns = ({ matrixState, setmatrixState }) => {
+const Columns = ({ matrixState, setMatrixState }) => {
   return (
     <>
-      {matrixState.map((arrOfObj, index) => {
+      {matrixState.map((rows, index) => {
         return (
-          <tr key={Date.now() * Math.random() + 100}>
+          <tr key={rows[0].value}>
             <th scope="row">{index + 1}</th>
-            {arrOfObj.map((cellObj) => {
+            {rows.map((cell) => {
               return (
                 <Cell
-                  key={cellObj.id * Math.random()}
-                  cellObj={cellObj}
+                  key={cell.id}
+                  cell={cell}
                   matrixState={matrixState}
-                  setmatrixState={setmatrixState}
+                  setMatrixState={setMatrixState}
                 />
               );
             })}
             <RowAvarage
-              arrOfObj={arrOfObj}
+              rows={rows}
               matrixState={matrixState}
-              setmatrixState={setmatrixState}
+              setMatrixState={setMatrixState}
             />
             <ButtonDelete
               matrixState={matrixState}
-              setmatrixState={setmatrixState}
-              arrOfObj={arrOfObj}
+              setMatrixState={setMatrixState}
               index={index}
             />
           </tr>

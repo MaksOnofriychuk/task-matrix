@@ -1,17 +1,22 @@
+import { nanoid } from "nanoid";
 import React, { useState } from "react";
 import Form from "./components/Form/Form";
 import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
 
 function App() {
+  const cellIdSize = 3;
+
   const [columnsState, setColumnsState] = useState(0);
+
   const [rowsState, setRowsState] = useState(0);
+
   const [tableState, setTableState] = useState("");
 
-  const getFormState = (obj) => {
-    setTableState(obj);
-    setColumnsState(Number(obj.columns));
-    setRowsState(Number(obj.rows));
+  const getFormState = (formState) => {
+    setTableState(formState);
+    setColumnsState(Number(formState.columns));
+    setRowsState(Number(formState.rows));
   };
 
   const columnsArray = Array(columnsState)
@@ -20,12 +25,12 @@ function App() {
 
   const rowsArray = Array(rowsState)
     .fill(0)
-    .map((c, i) => i + 1);
+    .map((r, i) => i + 1);
 
-  const matrixArray = rowsArray.map((el) => {
-    return columnsArray.map((item) => ({
-      id: Date.now() * Math.random(),
-      value: Math.floor(Math.random() * 10),
+  const matrixArray = rowsArray.map((row) => {
+    return columnsArray.map((column) => ({
+      id: nanoid(cellIdSize),
+      value: Math.floor(Math.random() * 1000),
     }));
   });
 
@@ -37,7 +42,11 @@ function App() {
           <Form getFormState={(obj) => getFormState(obj)} />
 
           {tableState && (
-            <Table matrixArray={matrixArray} columnsArray={columnsArray} />
+            <Table
+              matrixArray={matrixArray}
+              columnsArray={columnsArray}
+              cellIdSize={cellIdSize}
+            />
           )}
         </div>
       </div>

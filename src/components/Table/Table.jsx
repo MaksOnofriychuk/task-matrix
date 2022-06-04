@@ -1,35 +1,32 @@
 import React, { useState } from "react";
 import Body from "./Body";
-import Title from "./Title";
+import Header from "./Header";
+import { nanoid } from "nanoid";
 import "./table.scss";
 
-const Table = ({ matrixArray, columnsArray }) => {
-  const [matrixState, setmatrixState] = useState(matrixArray);
+const Table = ({ matrixArray, columnsArray, cellIdSize }) => {
+  const [matrixState, setMatrixState] = useState(matrixArray);
 
-  const addRow = () => {
-    setmatrixState((prev) => [
-      ...prev,
-      columnsArray.map((item) => ({
-        id: Date.now() * Math.random(),
-        value: Math.floor(Math.random() * 10),
+  const addedingRow = () => {
+    setMatrixState((prevState) => [
+      ...prevState,
+      columnsArray.map((column) => ({
+        id: nanoid(cellIdSize),
+        value: Math.floor(Math.random() * 1000),
       })),
     ]);
   };
 
   return (
     <div className="matrix__content-table">
-      <button onClick={() => addRow()}>add row</button>
+      <button onClick={addedingRow}>add row</button>
       <table className="table">
-        <thead>
-          <Title columnsArray={columnsArray} matrixState={matrixState} />
-        </thead>
-        <tbody>
-          <Body
-            matrixState={matrixState}
-            setmatrixState={setmatrixState}
-            columnsArray={columnsArray}
-          />
-        </tbody>
+        <Header columnsArray={columnsArray} matrixState={matrixState} />
+        <Body
+          matrixState={matrixState}
+          setMatrixState={setMatrixState}
+          columnsArray={columnsArray}
+        />
       </table>
     </div>
   );

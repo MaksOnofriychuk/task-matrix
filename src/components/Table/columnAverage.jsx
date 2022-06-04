@@ -14,9 +14,9 @@ const ColumnAverage = ({ matrixState }) => {
 
   return (
     <>
-      {columnAvarageArray.map((col) => {
-        return <td key={Math.random() * 10000}>{col}</td>;
-      })}
+      {columnAvarageArray.map((number, index) => (
+        <td key={number + index}>{number}</td>
+      ))}
     </>
   );
 };
