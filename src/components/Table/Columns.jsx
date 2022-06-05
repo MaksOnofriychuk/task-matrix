@@ -25,33 +25,34 @@ export const RowAvarage = ({ rows }) => {
   );
 };
 
-export const ButtonDelete = ({ index }) => {
+export const ButtonDelete = ({ rows }) => {
   const dispatch = useDispatch();
 
-  const deletingRow = (index) => {
-    dispatch(deleteRow(index));
+  const deletingRow = (rows) => {
+    dispatch(deleteRow(rows));
   };
 
   return (
     <th>
-      <button onClick={() => deletingRow(index)}>x</button>
+      <button onClick={() => deletingRow(rows)}>x</button>
     </th>
   );
 };
 
 const Columns = () => {
   const { matrixState } = useSelector((state) => state.table);
+
   return (
     <>
       {matrixState.map((rows, index) => {
         return (
-          <tr key={`${rows[0].value} ${index}`}>
+          <tr key={`${rows[0].value}${index}`}>
             <th scope="row">{index + 1}</th>
             {rows.map((cell) => {
               return <Cell key={cell.id} cell={cell} />;
             })}
             <RowAvarage rows={rows} />
-            <ButtonDelete index={index} />
+            <ButtonDelete rows={rows} />
           </tr>
         );
       })}

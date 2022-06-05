@@ -12,17 +12,24 @@ const initialState = {
 export default function tableReducer(state = initialState, action) {
   switch (action.type) {
     case GET_TABLE_DATA: {
-      const columnsArray = Array(Number(action.payload.columns))
-        .fill(0)
-        .map((_, i) => i + 1);
+      const createColumnsArray = (columnCount) => {
+        return Array(Number(columnCount))
+          .fill(0)
+          .map((_, i) => i + 1);
+      };
+      const columnsArray = createColumnsArray(action.payload.columns);
 
-      const rowsArray = Array(Number(action.payload.rows))
-        .fill(0)
-        .map((_, i) => i + 1);
+      const createRowsArray = (rowCount) => {
+        return Array(Number(rowCount))
+          .fill(0)
+          .map((_, i) => i + 1);
+      };
+
+      const rowsArray = createRowsArray(action.payload.rows);
 
       const matrixArray = rowsArray.map((_, i) => {
         return columnsArray.map((_, j) => ({
-          id: `${i} + ${j}`,
+          id: `${i}${j}`,
           value: Math.floor(Math.random() * 1000),
         }));
       });
@@ -52,7 +59,7 @@ export default function tableReducer(state = initialState, action) {
 
     case DELETE_ROW: {
       const newMatrixState = state.matrixState.filter(
-        (_, i) => i !== action.payload
+        (columns) => JSON.stringify(columns) !== JSON.stringify(action.payload)
       );
 
       return {
@@ -66,8 +73,8 @@ export default function tableReducer(state = initialState, action) {
         ...state,
         matrixState: [
           ...state.matrixState,
-          state.columnsArray.map((column, i) => ({
-            id: `${column}${i}`,
+          state.columnsArray.map((column, index) => ({
+            id: `${column}${index}`,
             value: Math.floor(Math.random() * 1000),
           })),
         ],
@@ -88,9 +95,9 @@ export const addCountCell = (id) => ({
   payload: id,
 });
 
-export const deleteRow = (index) => ({
+export const deleteRow = (rows) => ({
   type: DELETE_ROW,
-  payload: index,
+  payload: rows,
 });
 
 export const addedRow = () => ({
