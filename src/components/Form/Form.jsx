@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getTableDate } from "../../redux/Table";
 import "./form.scss";
 
 const Form = ({ getFormState }) => {
+  const disptach = useDispatch();
+
   const [formState, setFormState] = useState({
     columns: "",
     rows: "",
