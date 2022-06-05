@@ -66,8 +66,8 @@ export default function tableReducer(state = initialState, action) {
         ...state,
         matrixState: [
           ...state.matrixState,
-          state.columnsArray.map((_, i) => ({
-            id: `${state.matrixState[0][0].id}  ${i} `,
+          state.columnsArray.map((column, i) => ({
+            id: `${column}${i}`,
             value: Math.floor(Math.random() * 1000),
           })),
         ],
