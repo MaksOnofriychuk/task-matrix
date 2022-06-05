@@ -1,9 +1,12 @@
 const GET_TABLE_DATA = "GET_TABLE_DATA";
-const ADD_CELLS_COUNT = "ADD_CELLS_COUNT";
+const ADD_CELL_COUNT = "ADD_CELL_COUNT";
+const DELETE_ROW = "DELETE_ROW";
+const ADD_ROW = "ADD_ROW";
 
 const initialState = {
   matrixState: [],
   columnsArray: [],
+  formData: "",
 };
 
 export default function tableReducer(state = initialState, action) {
@@ -11,16 +14,16 @@ export default function tableReducer(state = initialState, action) {
     case GET_TABLE_DATA: {
       const columnsArray = Array(Number(action.payload.columns))
         .fill(0)
-        .map((c, i) => i + 1);
+        .map((_, i) => i + 1);
 
       const rowsArray = Array(Number(action.payload.rows))
         .fill(0)
-        .map((c, i) => i + 1);
+        .map((_, i) => i + 1);
 
-      const matrixArray = rowsArray.map((el) => {
-        return columnsArray.map((item) => ({
-          id: Date.now() * Math.random(),
-          value: Math.floor(Math.random() * 10),
+      const matrixArray = rowsArray.map((_, i) => {
+        return columnsArray.map((_, j) => ({
+          id: `${i} + ${j}`,
+          value: Math.floor(Math.random() * 1000),
         }));
       });
 
@@ -28,33 +31,68 @@ export default function tableReducer(state = initialState, action) {
         ...state,
         matrixState: matrixArray,
         columnsArray: columnsArray,
+        formData: action.payload,
       };
     }
 
-    case ADD_CELLS_COUNT: {
-      const addingCells = state.matrixState.map((item) =>
-        item.map((el) =>
-          el.id === action.payload ? { id: el.id, value: el.value + 1 } : el
+    case ADD_CELL_COUNT: {
+      const newMatrixState = state.matrixState.map((items) =>
+        items.map((item) =>
+          item.id === action.payload
+            ? { id: item.id, value: item.value + 1 }
+            : item
         )
       );
 
       return {
         ...state,
-        matrixState: addingCells,
+        matrixState: newMatrixState,
       };
     }
+
+    case DELETE_ROW: {
+      const newMatrixState = state.matrixState.filter(
+        (_, i) => i !== action.payload
+      );
+
+      return {
+        ...state,
+        matrixState: newMatrixState,
+      };
+    }
+
+    case ADD_ROW:
+      return {
+        ...state,
+        matrixState: [
+          ...state.matrixState,
+          state.columnsArray.map((_, i) => ({
+            id: `${state.matrixState[0][0].id}  ${i} `,
+            value: Math.floor(Math.random() * 1000),
+          })),
+        ],
+      };
 
     default:
       return state;
   }
 }
 
-export const getTableDate = (obj) => ({
+export const getTableData = (obj) => ({
   type: GET_TABLE_DATA,
   payload: obj,
 });
 
-export const addCountCells = (id) => ({
-  type: ADD_CELLS_COUNT,
+export const addCountCell = (id) => ({
+  type: ADD_CELL_COUNT,
   payload: id,
+});
+
+export const deleteRow = (index) => ({
+  type: DELETE_ROW,
+  payload: index,
+});
+
+export const addedRow = () => ({
+  type: ADD_ROW,
 });
