@@ -2,8 +2,9 @@ import React from "react";
 import Body from "./Body";
 import Header from "./Header";
 import { useDispatch } from "react-redux";
-import { addedRow } from "../../redux/Table";
+
 import "./table.scss";
+import { addedRow } from "../../reducers/actions/tableActions";
 
 const Table = () => {
   const dispatch = useDispatch();

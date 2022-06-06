@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getTableData } from "../../redux/Table";
+import { getTableData } from "../../reducers/actions/tableActions";
+
 import "./form.scss";
 
 const Form = () => {

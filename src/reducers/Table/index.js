@@ -1,7 +1,7 @@
-const GET_TABLE_DATA = "GET_TABLE_DATA";
-const ADD_CELL_COUNT = "ADD_CELL_COUNT";
-const DELETE_ROW = "DELETE_ROW";
-const ADD_ROW = "ADD_ROW";
+export const GET_TABLE_DATA = "GET_TABLE_DATA";
+export const ADD_CELL_COUNT = "ADD_CELL_COUNT";
+export const DELETE_ROW = "DELETE_ROW";
+export const ADD_ROW = "ADD_ROW";
 
 const initialState = {
   matrixState: [],
@@ -84,22 +84,3 @@ export default function tableReducer(state = initialState, action) {
       return state;
   }
 }
-
-export const getTableData = (obj) => ({
-  type: GET_TABLE_DATA,
-  payload: obj,
-});
-
-export const addCountCell = (id) => ({
-  type: ADD_CELL_COUNT,
-  payload: id,
-});
-
-export const deleteRow = (rows) => ({
-  type: DELETE_ROW,
-  payload: rows,
-});
-
-export const addedRow = () => ({
-  type: ADD_ROW,
-});

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { addCountCell, deleteRow } from "../../redux/Table";
+import { addCountCell, deleteRow } from "../../reducers/actions/tableActions";
 
 export const Cell = ({ cell }) => {
   const dispatch = useDispatch();
