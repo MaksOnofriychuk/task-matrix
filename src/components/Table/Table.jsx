@@ -1,31 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import Body from "./Body";
 import Header from "./Header";
-import "./table.scss";
+import { useDispatch } from "react-redux";
 
-const Table = ({ matrixArray, columnsArray }) => {
-  const [matrixState, setMatrixState] = useState(matrixArray);
+import "./table.scss";
+import { addedRow } from "../../reducers/actions/tableActions";
+
+const Table = () => {
+  const dispatch = useDispatch();
 
   const addedingRow = () => {
-    setMatrixState((prevState) => [
-      ...prevState,
-      columnsArray.map((_, i) => ({
-        id: `${matrixState[0][0].id} + ${i}`,
-        value: Math.floor(Math.random() * 1000),
-      })),
-    ]);
+    dispatch(addedRow());
   };
 
   return (
     <div className="matrix__content-table">
       <button onClick={addedingRow}>add row</button>
       <table className="table">
-        <Header columnsArray={columnsArray} matrixState={matrixState} />
-        <Body
-          matrixState={matrixState}
-          setMatrixState={setMatrixState}
-          columnsArray={columnsArray}
-        />
+        <Header />
+        <Body />
       </table>
     </div>
   );

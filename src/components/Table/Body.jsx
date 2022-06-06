@@ -3,14 +3,14 @@ import AvarageSumOfRow from "./AvarageSumOfRow";
 import ColumnAverage from "./columnAverage";
 import Columns from "./Columns";
 
-const Body = ({ matrixState, setMatrixState }) => {
+const Body = () => {
   return (
     <tbody>
-      <Columns matrixState={matrixState} setMatrixState={setMatrixState} />
+      <Columns />
       <tr>
         <th scope="row">AVG</th>
-        <ColumnAverage matrixState={matrixState} />
-        <AvarageSumOfRow matrixState={matrixState} />
+        <ColumnAverage />
+        <AvarageSumOfRow />
       </tr>
     </tbody>
   );

@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const Header = ({ columnsArray, matrixState }) => {
+const Header = () => {
+  const { matrixState, columnsArray } = useSelector((state) => state.table);
   return (
     <thead>
       <tr>

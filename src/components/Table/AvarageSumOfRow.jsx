@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const AvarageSumOfRow = ({ matrixState }) => {
+const AvarageSumOfRow = () => {
+  const { matrixState } = useSelector((state) => state.table);
   const rowSums = matrixState.map((columns) => {
     return columns.reduce((resultNumber, cell) => resultNumber + cell.value, 0);
   });

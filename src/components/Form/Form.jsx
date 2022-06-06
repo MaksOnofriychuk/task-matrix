@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getTableData } from "../../reducers/actions/tableActions";
+
 import "./form.scss";
 
-const Form = ({ getFormState }) => {
+const Form = () => {
+  const disptach = useDispatch();
+
   const [formState, setFormState] = useState({
     columns: "",
     rows: "",
@@ -15,7 +20,7 @@ const Form = ({ getFormState }) => {
       formState.rows !== "" &&
       formState.cells !== ""
     ) {
-      getFormState(formState);
+      disptach(getTableData(formState));
     }
 
     setFormState({

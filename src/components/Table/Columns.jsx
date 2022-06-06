@@ -1,13 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { addCountCell, deleteRow } from "../../reducers/actions/tableActions";
 
-export const Cell = ({ cell, setMatrixState, matrixState }) => {
+export const Cell = ({ cell }) => {
+  const dispatch = useDispatch();
+
   const addingCell = (cell) => {
-    const newMatrixState = matrixState.map((items) =>
-      items.map((item) =>
-        item.id === cell.id ? { id: item.id, value: item.value + 1 } : item
-      )
-    );
-    setMatrixState(newMatrixState);
+    dispatch(addCountCell(cell.id));
   };
 
   return <td onClick={() => addingCell(cell)}>{cell.value}</td>;
@@ -25,46 +25,34 @@ export const RowAvarage = ({ rows }) => {
   );
 };
 
-export const ButtonDelete = ({ matrixState, setMatrixState, index }) => {
-  const deletingRow = (index) => {
-    const newMatrixState = matrixState.filter((_, i) => i !== index);
-    setMatrixState(newMatrixState);
+export const ButtonDelete = ({ rows }) => {
+  const dispatch = useDispatch();
+
+  const deletingRow = (rows) => {
+    dispatch(deleteRow(rows));
   };
 
   return (
     <th>
-      <button onClick={() => deletingRow(index)}>x</button>
+      <button onClick={() => deletingRow(rows)}>x</button>
     </th>
   );
 };
 
-const Columns = ({ matrixState, setMatrixState }) => {
+const Columns = () => {
+  const { matrixState } = useSelector((state) => state.table);
+
   return (
     <>
       {matrixState.map((rows, index) => {
         return (
-          <tr key={rows[0].value}>
+          <tr key={`${rows[0].value}${index}`}>
             <th scope="row">{index + 1}</th>
             {rows.map((cell) => {
-              return (
-                <Cell
-                  key={cell.id}
-                  cell={cell}
-                  matrixState={matrixState}
-                  setMatrixState={setMatrixState}
-                />
-              );
+              return <Cell key={cell.id} cell={cell} />;
             })}
-            <RowAvarage
-              rows={rows}
-              matrixState={matrixState}
-              setMatrixState={setMatrixState}
-            />
-            <ButtonDelete
-              matrixState={matrixState}
-              setMatrixState={setMatrixState}
-              index={index}
-            />
+            <RowAvarage rows={rows} />
+            <ButtonDelete rows={rows} />
           </tr>
         );
       })}

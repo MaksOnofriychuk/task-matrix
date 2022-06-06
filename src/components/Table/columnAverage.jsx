@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const ColumnAverage = ({ matrixState }) => {
+const ColumnAverage = () => {
+  const { matrixState } = useSelector((state) => state.table);
   const sumByColumnsArray = matrixState.reduce((resultArr, arr) => {
     arr.forEach((cell, index) => {
       resultArr[index] = (resultArr[index] || 0) + cell.value;
@@ -15,7 +17,7 @@ const ColumnAverage = ({ matrixState }) => {
   return (
     <>
       {columnAvarageArray.map((number, index) => (
-        <td key={number + index}>{number}</td>
+        <td key={`${number}${index}`}>{number}</td>
       ))}
     </>
   );
