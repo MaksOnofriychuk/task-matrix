@@ -1,14 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 const Header = () => {
-  const { matrixState, columnsArray } = useSelector((state) => state.table);
+  const { matrix, columns } = useTypedSelector((state) => state.table);
+
   return (
     <thead>
       <tr>
         <th scope="col">N</th>
-        {matrixState.length ? (
-          columnsArray.map((column) => {
+        {matrix.length ? (
+          columns.map((column) => {
             return (
               <th key={column} scope="col">
                 {column}

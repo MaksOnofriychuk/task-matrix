@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getTableData } from "../../reducers/actions/tableActions";
-
+import { getTableData } from "../../store/actions";
 import "./form.scss";
 
-const Form = () => {
+interface FormState {
+  columns: string;
+  rows: string;
+  cells: string;
+}
+
+const Form: FC = () => {
   const disptach = useDispatch();
 
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<FormState>({
     columns: "",
     rows: "",
     cells: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       formState.columns !== "" &&
@@ -30,7 +35,8 @@ const Form = () => {
     });
   };
 
-  const handleChange = ({ target }) => {
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
     setFormState((prevState) => ({
       ...prevState,
       [target.name]: target.value,
