@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Form from "./components/Form/Form";
 import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
+import { useSelectorHook } from "./hooks/useSelectorHook";
 
 function App() {
-  const { formData } = useSelector((state) => state.table);
+  const { formData } = useSelectorHook((state) => state.table);
 
   return (
     <div className="matrix">

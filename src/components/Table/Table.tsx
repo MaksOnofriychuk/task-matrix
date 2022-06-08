@@ -1,16 +1,14 @@
 import React from "react";
 import Body from "./Body";
 import Header from "./Header";
-import { useDispatch } from "react-redux";
-
 import "./table.scss";
-import { addedRow } from "../../reducers/actions/tableActions";
+import { useActions } from "../../hooks/useActions";
 
 const Table = () => {
-  const dispatch = useDispatch();
+  const { addedRow } = useActions();
 
   const addedingRow = () => {
-    dispatch(addedRow());
+    addedRow();
   };
 
   return (
