@@ -4,7 +4,7 @@ export type MatrixCell = {
 };
 
 export type MatrixCells = {
-  id: number;
+  id: string;
   value: MatrixCell[];
 };
 
@@ -19,6 +19,7 @@ export interface MatrixState {
   columns: number[];
   formData: string | object;
   matrix: MatrixCells[];
+  cellHover: number;
 }
 
 export enum TableActionsTypes {
@@ -26,6 +27,7 @@ export enum TableActionsTypes {
   ADD_CELL_COUNT = "ADD_CELL_COUNT",
   DELETE_ROW = "DELETE_ROW",
   ADD_ROW = "ADD_ROW",
+  HOVERING_CELL = "HOVERING_CELL",
 }
 
 export interface GetTableDataAction {
@@ -40,21 +42,27 @@ export interface AddCountCellAction {
 
 export interface DeleteRowAction {
   type: TableActionsTypes.DELETE_ROW;
-  payload: number;
+  payload: any;
 }
 
 export interface AddedRowAction {
   type: TableActionsTypes.ADD_ROW;
 }
 
+export interface HoveringCell {
+  type: TableActionsTypes.HOVERING_CELL;
+  payload: number;
+}
+
 export type TableAction =
   | GetTableDataAction
   | AddCountCellAction
   | DeleteRowAction
-  | AddedRowAction;
+  | AddedRowAction
+  | HoveringCell;
 
 export interface ButtonDeleteProps {
-  rowsId: number;
+  cells: { id: string; value: any[] };
 }
 
 export interface RowAvarageProps {
@@ -64,4 +72,5 @@ export interface RowAvarageProps {
 export interface CellProps {
   id: string;
   value: number;
+  testArr: number[];
 }

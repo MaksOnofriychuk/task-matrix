@@ -5,16 +5,21 @@ export const getTableData = (obj: object) => ({
   payload: obj,
 });
 
-export const addCountCell = (id: boolean) => ({
+export const addCountCell = (id: string) => ({
   type: TableActionsTypes.ADD_CELL_COUNT,
   payload: id,
 });
 
-export const deleteRow = (id: number) => ({
+export const deleteRow = (obj: any) => ({
   type: TableActionsTypes.DELETE_ROW,
-  payload: id,
+  payload: obj,
 });
 
 export const addedRow = () => ({
   type: TableActionsTypes.ADD_ROW,
+});
+
+export const hoverCell = (num: number) => ({
+  type: TableActionsTypes.HOVERING_CELL,
+  payload: num,
 });

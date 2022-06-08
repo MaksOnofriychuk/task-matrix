@@ -1,11 +1,12 @@
 import { MatrixState, TableAction, TableActionsTypes } from "../../types/table";
-import { createArray } from "./helpers";
+import { createArray } from "../../utils/helpers";
 
 const initialState: MatrixState = {
   columns: [],
   rows: [],
   matrix: [],
   formData: "",
+  cellHover: 0,
 };
 
 export default function tableReducer(
@@ -17,9 +18,9 @@ export default function tableReducer(
       const columns = createArray(action.payload.columns);
       const rows = createArray(action.payload.rows);
 
-      const test = rows.map((_, i) => {
+      const newMatrix = rows.map((_, i) => {
         return {
-          id: i + 1,
+          id: `${_}${i}`,
           value: [
             ...columns.map((_, j) => {
               return {
@@ -36,7 +37,7 @@ export default function tableReducer(
         columns: columns,
         rows: rows,
         formData: action.payload,
-        matrix: test,
+        matrix: newMatrix,
       };
     }
 
@@ -58,7 +59,7 @@ export default function tableReducer(
 
     case TableActionsTypes.DELETE_ROW: {
       const newMatrix = state.matrix.filter(
-        (rows) => rows.id !== action.payload
+        (rows) => rows.id !== action.payload.id
       );
 
       return {
@@ -75,11 +76,20 @@ export default function tableReducer(
 
       const newMatrix = [
         ...state.matrix,
-        { id: state.matrix.length + 1, value: newValue },
+        { id: `${Math.random()}`, value: newValue },
       ];
+
       return {
         ...state,
         matrix: newMatrix,
+      };
+
+    case TableActionsTypes.HOVERING_CELL:
+      console.log(action.payload);
+
+      return {
+        ...state,
+        cellHover: action.payload,
       };
 
     default:

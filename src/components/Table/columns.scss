@@ -1,0 +1,14 @@
+.ok {
+  background-color: red;
+}
+.standart {
+  padding: 10px;
+}
+td {
+  &:hover {
+    background-color: aqua !important;
+  }
+  &:active {
+    background-color: green !important;
+  }
+}

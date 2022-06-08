@@ -2,10 +2,10 @@ import React from "react";
 import Form from "./components/Form/Form";
 import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
-import { useTypedSelector } from "./hooks/useTypedSelector";
+import { useSelectorHook } from "./hooks/useSelectorHook";
 
 function App() {
-  const { formData } = useTypedSelector((state) => state.table);
+  const { formData } = useSelectorHook((state) => state.table);
 
   return (
     <div className="matrix">

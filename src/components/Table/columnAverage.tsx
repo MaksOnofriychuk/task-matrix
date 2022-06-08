@@ -1,11 +1,11 @@
 import React from "react";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useSelectorHook } from "../../hooks/useSelectorHook";
 import { MatrixCell, MatrixCells } from "../../types/table";
 
 const ColumnAverage = () => {
-  const { matrix } = useTypedSelector((state) => state.table);
+  const { matrix } = useSelectorHook((state) => state.table);
 
-  const sumByColumnsArray = matrix.reduce(
+  const sumByColumnsArray: number[] = matrix.reduce(
     (resultArr: number[], cells: MatrixCells) => {
       cells.value.forEach((cell: MatrixCell, index: number) => {
         resultArr[index] = (resultArr[index] || 0) + cell.value;
@@ -15,7 +15,7 @@ const ColumnAverage = () => {
     []
   );
 
-  const columnAvarageArray = sumByColumnsArray.map((num: number) =>
+  const columnAvarageArray: number[] = sumByColumnsArray.map((num: number) =>
     Math.floor(num / Number(matrix.length))
   );
 

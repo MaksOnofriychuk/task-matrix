@@ -1,8 +1,8 @@
 import React from "react";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useSelectorHook } from "../../hooks/useSelectorHook";
 
 const Header = () => {
-  const { matrix, columns } = useTypedSelector((state) => state.table);
+  const { matrix, columns } = useSelectorHook((state) => state.table);
 
   return (
     <thead>

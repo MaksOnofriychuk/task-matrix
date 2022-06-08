@@ -1,6 +1,5 @@
-import React, { FC, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getTableData } from "../../store/actions";
+import React, { useState } from "react";
+import { useActions } from "../../hooks/useActions";
 import "./form.scss";
 
 interface FormState {
@@ -9,8 +8,8 @@ interface FormState {
   cells: string;
 }
 
-const Form: FC = () => {
-  const disptach = useDispatch();
+const Form = () => {
+  const { getTableData } = useActions();
 
   const [formState, setFormState] = useState<FormState>({
     columns: "",
@@ -25,7 +24,7 @@ const Form: FC = () => {
       formState.rows !== "" &&
       formState.cells !== ""
     ) {
-      disptach(getTableData(formState));
+      getTableData(formState);
     }
 
     setFormState({
