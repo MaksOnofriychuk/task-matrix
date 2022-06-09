@@ -10,9 +10,10 @@ import {
 } from "../../types/table";
 import "./columns.scss";
 
-export const Cell: FC<CellProps> = ({ id, value, testArr }) => {
-  const { addCountCell, hoverCell } = useActions();
+export const Cell: FC<CellProps> = ({ cell }) => {
+  const { addCountCell, setHoverCell } = useActions();
   const [isHovering, setIsHovering] = React.useState<boolean>(false);
+  const { hoverACells } = useSelectorHook((state) => state.table);
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -20,36 +21,48 @@ export const Cell: FC<CellProps> = ({ id, value, testArr }) => {
 
   const handleMouseOut = () => {
     setIsHovering(false);
-    hoverCell(0);
+    setHoverCell(0);
   };
 
   const addingCell = () => {
-    addCountCell(id);
+    addCountCell(cell.id);
   };
 
   useEffect(() => {
     if (isHovering) {
-      hoverCell(value);
+      setHoverCell(cell);
     }
   }, [isHovering]);
 
-  const k = testArr.some((elem) => elem === value);
+  const isHover = hoverACells.some((elem) => elem.id === cell.id);
 
   return (
     <td
-      className={k ? "ok" : ""}
+      className={isHover ? "ok" : ""}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
       onClick={addingCell}
     >
-      {value}
+      {cell.value}
     </td>
   );
 };
 
 export const RowAvarage: FC<RowAvarageProps> = ({ rowsValue }) => {
+  const [isHoverSum, setIsHoverSum] = React.useState<boolean>(false);
+
+  const handleMouseOver = () => {
+    setIsHoverSum(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHoverSum(false);
+  };
+
+  console.log(isHoverSum);
+  
   return (
-    <th>
+    <th onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       {rowsValue.reduce(
         (resultNumber: number, cell: MatrixCell) => resultNumber + cell.value,
         0
@@ -73,35 +86,7 @@ export const ButtonDelete: FC<ButtonDeleteProps> = ({ cells }) => {
 };
 
 const Columns = () => {
-  const { matrix, cellHover } = useSelectorHook((state) => state.table);
-  console.log(matrix);
-
-  console.log(cellHover);
-
-  const testArr: any[] = [];
-
-  const b = [1, 2, 3, 4];
-
-  const test = matrix.map((rows) => rows.value.map((cell) => cell.value));
-  console.log(test);
-
-  if (cellHover) {
-    b.forEach((_) => {
-      matrix.forEach((rows, i) => {
-        const a = rows.value.reduce((prev: any, current) => {
-          return Math.abs(current.value - cellHover) <
-            Math.abs(prev.value - cellHover)
-            ? current
-            : prev;
-        });
-        if (!testArr[i]) {
-          testArr.push(a.value);
-        }
-
-        return a.value;
-      });
-    });
-  }
+  const { matrix } = useSelectorHook((state) => state.table);
 
   return (
     <>
@@ -110,7 +95,7 @@ const Columns = () => {
           <tr key={`${index}${matrix.length}`}>
             <th>{index + 1}</th>
             {cells.value.map((cell: MatrixCell) => {
-              return <Cell testArr={testArr} key={cell.id} {...cell} />;
+              return <Cell key={cell.id} cell={cell} />;
             })}
             <RowAvarage rowsValue={cells.value} />
             <ButtonDelete cells={cells} />

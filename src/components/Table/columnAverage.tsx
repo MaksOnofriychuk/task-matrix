@@ -22,7 +22,9 @@ const ColumnAverage = () => {
   return (
     <>
       {columnAvarageArray.map((number: number, index: number) => (
-        <td key={`${number}${index}`}>{number}</td>
+        <td style={{ color: "red" }} key={`${number}${index}`}>
+          {number}
+        </td>
       ))}
     </>
   );

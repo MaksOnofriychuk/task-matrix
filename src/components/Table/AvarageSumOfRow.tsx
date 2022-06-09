@@ -22,7 +22,7 @@ const AvarageSumOfRow = () => {
       ? 0
       : Math.floor(sumColumnsSum / matrix.length);
 
-  return <td>{averageOverColumnSums}</td>;
+  return <td style={{ color: "blue" }}>{averageOverColumnSums}</td>;
 };
 
 export default AvarageSumOfRow;

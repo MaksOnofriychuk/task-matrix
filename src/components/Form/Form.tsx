@@ -34,8 +34,8 @@ const Form = () => {
     });
   };
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const target = event.target;
     setFormState((prevState) => ({
       ...prevState,
       [target.name]: target.value,
