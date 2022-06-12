@@ -18,10 +18,11 @@ export interface MatrixState {
   rows: number[];
   columns: number[];
   formData: string | FormState;
-  matrix: MatrixCells[];
+  matrix: any[];
   cellHover: MatrixCell | number;
   hoverACells: MatrixCell[];
   cells: number;
+  sumHover: number;
 }
 
 export enum TableActionsTypes {
@@ -30,6 +31,7 @@ export enum TableActionsTypes {
   DELETE_ROW = "DELETE_ROW",
   ADD_ROW = "ADD_ROW",
   SET_HOVERING_CELL = "SET_HOVERING_CELL",
+  SET_HOVERING_SUM = "SET_HOVERING_SUM",
 }
 
 export interface GetTableDataAction {
@@ -56,21 +58,32 @@ export interface SetHoveringCell {
   payload: MatrixCell;
 }
 
+export interface SetHoveringSum {
+  type: TableActionsTypes.SET_HOVERING_SUM;
+  payload: number;
+}
+
 export type TableAction =
   | GetTableDataAction
   | AddCountCellAction
   | DeleteRowAction
   | AddedRowAction
-  | SetHoveringCell;
+  | SetHoveringCell
+  | SetHoveringSum;
 
 export interface ButtonDeleteProps {
   cells: MatrixCells;
 }
 
 export interface RowAvarageProps {
-  rowsValue: MatrixCell[];
+  cells: MatrixCell[];
 }
 
 export interface CellProps {
   cell: MatrixCell;
 }
+
+export interface CellsProps {
+  cells: MatrixCells;
+}
+

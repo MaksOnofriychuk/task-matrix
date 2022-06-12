@@ -13,7 +13,9 @@ const Table = () => {
 
   return (
     <div className="matrix__content-table">
-      <button onClick={addedingRow}>add row</button>
+      <button className="table__button" onClick={addedingRow}>
+        add row
+      </button>
       <table className="table">
         <Header />
         <Body />

@@ -28,3 +28,8 @@ export const setHoverCell = (payload: MatrixCell | number) => ({
   type: TableActionsTypes.SET_HOVERING_CELL,
   payload,
 });
+
+export const setHoverSum = (payload: number) => ({
+  type: TableActionsTypes.SET_HOVERING_SUM,
+  payload,
+});

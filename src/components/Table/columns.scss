@@ -1,14 +1,40 @@
-.ok {
+.hovering {
   background-color: red;
 }
-.standart {
-  padding: 10px;
-}
-td {
+
+.cell {
+  height: 30px;
+  color: rgb(185, 5, 5);
+
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
   &:hover {
     background-color: aqua !important;
   }
   &:active {
     background-color: green !important;
+  }
+}
+
+.hovers {
+  height: 30px;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+  background-color: #fff;
+  color: rgb(185, 5, 5);
+  border: none;
+  text-align: center;
+  position: relative;
+  z-index: 100;
+
+  .dop__background {
+    width: 100%;
+    background-color: blue;
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    right: 0;
   }
 }

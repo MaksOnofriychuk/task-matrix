@@ -15,6 +15,7 @@ const initialState: MatrixState = {
   matrix: [],
   cellHover: 0,
   hoverACells: [],
+  sumHover: 0,
 };
 
 export default function tableReducer(
@@ -101,10 +102,13 @@ export default function tableReducer(
       const cells: MatrixCell[] = rowsValue.flat(1);
 
       const diferenceValue: MatrixCell[] = cells.map((cell: MatrixCell) => {
-        const aDiference = Math.abs(cell.value - action.payload.value);
-        const bDiference = Math.abs(action.payload.value - cell.value);
-        const result = aDiference > bDiference ? aDiference : bDiference;
-        return { id: cell.id, value: result };
+        const currentFromIncoming = Math.abs(cell.value - action.payload.value);
+        const IncomingFromCurrent = Math.abs(action.payload.value - cell.value);
+        const comparisonResult =
+          currentFromIncoming > IncomingFromCurrent
+            ? currentFromIncoming
+            : IncomingFromCurrent;
+        return { id: cell.id, value: comparisonResult };
       });
       const newDiferenceArray = diferenceValue.sort(
         (a: MatrixCell, b: MatrixCell) => a.value - b.value
@@ -128,6 +132,13 @@ export default function tableReducer(
         cellHover: action.payload,
         hoverACells: newResultCells,
       };
+
+    case TableActionsTypes.SET_HOVERING_SUM: {
+      return {
+        ...state,
+        sumHover: action.payload,
+      };
+    }
 
     default:
       return state;
