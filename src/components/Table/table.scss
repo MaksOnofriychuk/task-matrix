@@ -1,19 +1,81 @@
-table {
-  thead {
-    tr {
-      th {
-        padding: 20px;
-      }
-    }
-  }
+.matrix__content-table {
+  width: 100%;
+  height: 600px;
+}
 
-  tbody {
-    tr {
-      th {
-      }
-      td {
-        padding: 20px;
-      }
+.table {
+  width: 100%;
+  border-spacing: 10px 20px;
+  &__head {
+    .table__head-rows {
+      font-size: 20px;
     }
   }
+}
+
+tbody {
+  tr {
+    th {
+    }
+    td {
+      padding: 20px;
+      // margin: 0 auto;
+      border: 1px solid black;
+      border-radius: 10px;
+      background-color: rgb(49, 63, 63);
+      color: #fff;
+    }
+  }
+}
+
+.table__button {
+  margin: 50px auto;
+  display: flex;
+  padding: 10px 30px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: bisque;
+  color: #fff;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 5px 5px 4px 5px #888888;
+  transition: all 0.5s ease-in-out;
+  &:hover {
+    transform: translateY(-5px);
+  }
+  &:active {
+    background-color: rgb(160, 96, 16);
+  }
+}
+
+.column-average {
+  background-color: blue;
+  &:hover {
+    background-color: blue !important;
+  }
+}
+
+.avarage-sum {
+  background-color: blue;
+  &:hover {
+    background-color: blue !important;
+  }
+}
+
+.row-avarage {
+  color: #fff;
+  background: blue;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.delete__btn-row {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  font-size: 20px;
 }

@@ -1,12 +1,21 @@
-import { MatrixState, TableAction, TableActionsTypes } from "../../types/table";
+import {
+  MatrixCell,
+  MatrixCells,
+  MatrixState,
+  TableAction,
+  TableActionsTypes,
+} from "../../types/table";
 import { createArray } from "../../utils/helpers";
 
 const initialState: MatrixState = {
+  formData: "",
   columns: [],
   rows: [],
+  cells: 0,
   matrix: [],
-  formData: "",
   cellHover: 0,
+  hoverACells: [],
+  sumHover: 0,
 };
 
 export default function tableReducer(
@@ -15,12 +24,13 @@ export default function tableReducer(
 ): MatrixState {
   switch (action.type) {
     case TableActionsTypes.GET_TABLE_DATA: {
-      const columns = createArray(action.payload.columns);
-      const rows = createArray(action.payload.rows);
+      const columns: number[] = createArray(action.payload.columns);
+      const rows: number[] = createArray(action.payload.rows);
+      const cells: number = Number(action.payload.cells);
 
-      const newMatrix = rows.map((_, i) => {
+      const newMatrix = rows.map((item, i) => {
         return {
-          id: `${_}${i}`,
+          id: `${item}${i}`,
           value: [
             ...columns.map((_, j) => {
               return {
@@ -38,12 +48,13 @@ export default function tableReducer(
         rows: rows,
         formData: action.payload,
         matrix: newMatrix,
+        cells: cells,
       };
     }
 
     case TableActionsTypes.ADD_CELL_COUNT: {
       const newMatrix = state.matrix.map((rows) => {
-        const newRows = rows.value.map((cell: any) => {
+        const newRows = rows.value.map((cell: MatrixCell) => {
           return cell.id === action.payload
             ? { id: cell.id, value: cell.value + 1 }
             : cell;
@@ -59,7 +70,7 @@ export default function tableReducer(
 
     case TableActionsTypes.DELETE_ROW: {
       const newMatrix = state.matrix.filter(
-        (rows) => rows.id !== action.payload.id
+        (rows: MatrixCells) => rows.id !== action.payload.id
       );
 
       return {
@@ -69,12 +80,12 @@ export default function tableReducer(
     }
 
     case TableActionsTypes.ADD_ROW:
-      const newValue = state.columns.map((col, index) => ({
+      const newValue = state.columns.map((col: number, index) => ({
         id: `${col}${index}`,
         value: Math.floor(Math.random() * 1000),
       }));
 
-      const newMatrix = [
+      const newMatrix: MatrixCells[] = [
         ...state.matrix,
         { id: `${Math.random()}`, value: newValue },
       ];
@@ -84,13 +95,50 @@ export default function tableReducer(
         matrix: newMatrix,
       };
 
-    case TableActionsTypes.HOVERING_CELL:
-      console.log(action.payload);
+    case TableActionsTypes.SET_HOVERING_CELL:
+      const rowsValue: MatrixCell[][] = action.payload.value
+        ? state.matrix.map((row: MatrixCells) => row.value)
+        : [];
+      const cells: MatrixCell[] = rowsValue.flat(1);
+
+      const diferenceValue: MatrixCell[] = cells.map((cell: MatrixCell) => {
+        const currentFromIncoming = Math.abs(cell.value - action.payload.value);
+        const IncomingFromCurrent = Math.abs(action.payload.value - cell.value);
+        const comparisonResult =
+          currentFromIncoming > IncomingFromCurrent
+            ? currentFromIncoming
+            : IncomingFromCurrent;
+        return { id: cell.id, value: comparisonResult };
+      });
+      const newDiferenceArray = diferenceValue.sort(
+        (a: MatrixCell, b: MatrixCell) => a.value - b.value
+      );
+
+      const resultCells: MatrixCell[] = newDiferenceArray.map(
+        (cell: MatrixCell) => {
+          return {
+            id: cell.id,
+            value: Math.abs(action.payload.value - cell.value),
+          };
+        }
+      );
+
+      const newResultCells: MatrixCell[] = resultCells
+        .filter((cell: MatrixCell) => cell.value !== action.payload.value)
+        .slice(0, state.cells);
 
       return {
         ...state,
         cellHover: action.payload,
+        hoverACells: newResultCells,
       };
+
+    case TableActionsTypes.SET_HOVERING_SUM: {
+      return {
+        ...state,
+        sumHover: action.payload,
+      };
+    }
 
     default:
       return state;
