@@ -3,7 +3,7 @@ import { useSelectorHook } from "../../hooks/useSelectorHook";
 import { MatrixCell, MatrixCells } from "../../types/table";
 
 const AvarageSumOfRow = () => {
-  const { matrix } = useSelectorHook((state) => state.table);
+  const { matrix } = useSelectorHook((state) => state.tableReducer);
 
   const rowSums: number[] = matrix.map((cells: MatrixCells) => {
     return cells.value.reduce(

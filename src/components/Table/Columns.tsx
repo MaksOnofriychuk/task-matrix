@@ -1,6 +1,11 @@
 import React, { FC, useEffect, useMemo } from "react";
-import { useActions } from "../../hooks/useActions";
-import { useSelectorHook } from "../../hooks/useSelectorHook";
+import { useAppDispatch, useSelectorHook } from "../../hooks/useSelectorHook";
+import {
+  addCountCell,
+  deleteRow,
+  setHoverCell,
+  setHoverSum,
+} from "../../store/reducers/tableSlice";
 import {
   ButtonDeleteProps,
   CellProps,
@@ -12,7 +17,7 @@ import {
 import "./columns.scss";
 
 export const Cells: FC<CellsProps> = ({ cells }) => {
-  const { sumHover } = useSelectorHook((state) => state.table);
+  const { sumHover } = useSelectorHook((state) => state.tableReducer);
 
   const cellPercent =
     cells.value.reduce(
@@ -37,9 +42,9 @@ export const Cells: FC<CellsProps> = ({ cells }) => {
 };
 
 export const Cell: FC<CellProps> = ({ cell }) => {
-  const { addCountCell, setHoverCell } = useActions();
+  const dispatch = useAppDispatch();
   const [isHovering, setIsHovering] = React.useState<boolean>(false);
-  const { hoverACells } = useSelectorHook((state) => state.table);
+  const { hoverACells } = useSelectorHook((state) => state.tableReducer);
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -47,16 +52,16 @@ export const Cell: FC<CellProps> = ({ cell }) => {
 
   const handleMouseOut = () => {
     setIsHovering(false);
-    setHoverCell(0);
+    dispatch(setHoverCell(0));
   };
 
   const addingCell = () => {
-    addCountCell(cell.id);
+    dispatch(addCountCell(cell.id));
   };
 
   useEffect(() => {
     if (isHovering) {
-      setHoverCell(cell);
+      dispatch(setHoverCell(cell));
     }
   }, [isHovering]);
 
@@ -82,11 +87,11 @@ export const Cell: FC<CellProps> = ({ cell }) => {
           onMouseOut={handleMouseOut}
           onClick={addingCell}
         >
+          <span className="hover__span">{cell.value}</span>
           <div
             className="dop__background"
             style={{ height: `${cell.value}` }}
           ></div>
-          <span>{cell.value}</span>
         </td>
       )}
     </>
@@ -94,7 +99,7 @@ export const Cell: FC<CellProps> = ({ cell }) => {
 };
 
 export const RowAvarage: FC<RowAvarageProps> = ({ cells }) => {
-  const { setHoverSum } = useActions();
+  const dispatch = useAppDispatch();
   const [isHoverSum, setIsHoverSum] = React.useState<boolean>(false);
 
   const handleMouseOver = () => {
@@ -103,12 +108,12 @@ export const RowAvarage: FC<RowAvarageProps> = ({ cells }) => {
 
   const handleMouseOut = () => {
     setIsHoverSum(false);
-    setHoverSum(0);
+    dispatch(setHoverSum(0));
   };
 
   useEffect(() => {
     if (isHoverSum) {
-      setHoverSum(memoizadeValue);
+      dispatch(setHoverSum(memoizadeValue));
     }
   }, [isHoverSum]);
 
@@ -131,10 +136,10 @@ export const RowAvarage: FC<RowAvarageProps> = ({ cells }) => {
 };
 
 export const ButtonDelete: FC<ButtonDeleteProps> = ({ cells }) => {
-  const { deleteRow } = useActions();
+  const dispatch = useAppDispatch();
 
   const deletingRow = () => {
-    deleteRow(cells);
+    dispatch(deleteRow(cells));
   };
 
   return (
@@ -147,7 +152,7 @@ export const ButtonDelete: FC<ButtonDeleteProps> = ({ cells }) => {
 };
 
 const Columns = () => {
-  const { matrix } = useSelectorHook((state) => state.table);
+  const { matrix } = useSelectorHook((state) => state.tableReducer);
 
   return (
     <>

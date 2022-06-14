@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useActions } from "../../hooks/useActions";
+import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../hooks/useSelectorHook";
+import { getTableData } from "../../store/reducers/tableSlice";
 import "./form.scss";
 
 interface FormState {
@@ -9,8 +11,8 @@ interface FormState {
 }
 
 const Form = () => {
-  const { getTableData } = useActions();
-
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [formState, setFormState] = useState<FormState>({
     columns: "",
     rows: "",
@@ -24,7 +26,8 @@ const Form = () => {
       formState.rows !== "" &&
       formState.cells !== ""
     ) {
-      getTableData(formState);
+      dispatch(getTableData(formState));
+      navigate("table");
     }
 
     setFormState({

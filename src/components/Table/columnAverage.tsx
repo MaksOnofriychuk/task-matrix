@@ -3,7 +3,7 @@ import { useSelectorHook } from "../../hooks/useSelectorHook";
 import { MatrixCell, MatrixCells } from "../../types/table";
 
 const ColumnAverage = () => {
-  const { matrix } = useSelectorHook((state) => state.table);
+  const { matrix } = useSelectorHook((state) => state.tableReducer);
 
   const sumByColumnsArray: number[] = matrix.reduce(
     (resultArr: number[], cells: MatrixCells) => {

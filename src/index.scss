@@ -1,12 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
 
 .wrapper {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0px auto;
 }
 
 body {
   font-family: "Lato", sans-serif;
+  background-color: rgb(238, 234, 227);
+}
+a {
+  text-decoration: none;
 }
 
 html,

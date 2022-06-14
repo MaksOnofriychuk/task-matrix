@@ -2,7 +2,7 @@ import React from "react";
 import { useSelectorHook } from "../../hooks/useSelectorHook";
 
 const Header = () => {
-  const { matrix, columns } = useSelectorHook((state) => state.table);
+  const { matrix, columns } = useSelectorHook((state) => state.tableReducer);
 
   return (
     <thead className="table__head">
